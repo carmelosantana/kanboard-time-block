@@ -24,13 +24,13 @@ $tb_block = $this->timeBlock->get($task['id']);
                   action="<?= $this->url->href('TimeBlockController', 'save', array('plugin' => 'TimeBlock', 'task_id' => $task['id'])) ?>">
                 <?= $this->form->csrf() ?>
                 <?= $this->form->label(t('Date'), 'date') ?>
-                <input type="date" name="date" required
+                <input type="date" id="date" name="date" required
                        value="<?= $tb_block !== null ? date('Y-m-d', $tb_block['start']) : '' ?>">
                 <?= $this->form->label(t('Start time'), 'start_time') ?>
-                <input type="time" name="start_time" required
+                <input type="time" id="start_time" name="start_time" required
                        value="<?= $tb_block !== null ? date('H:i', $tb_block['start']) : '' ?>">
                 <?= $this->form->label(t('End time'), 'end_time') ?>
-                <input type="time" name="end_time" required
+                <input type="time" id="end_time" name="end_time" required
                        value="<?= $tb_block !== null ? date('H:i', $tb_block['end']) : '' ?>">
                 <div class="tb-actions">
                     <button type="submit" class="btn btn-blue"><?= t('Save') ?></button>

@@ -91,6 +91,12 @@ class TimeBlockModel extends Base
         // Unix timestamps are 10 digits through year 2286, so a same-length string
         // compare on the stored value is order-preserving; range endpoints are cast
         // to string to match the stored representation.
+        //
+        // NOTE: this matches on the block's START timestamp falling in
+        // [$rangeStart, $rangeEnd) — it is NOT full-overlap matching (a block
+        // starting before $rangeStart and ending inside/after the range is
+        // deliberately excluded). This is per spec §2; do not "fix" toward
+        // overlap semantics without updating the spec first.
         $rows = $this->db->table('task_has_metadata')
             ->columns(
                 'task_has_metadata.task_id',
@@ -174,8 +180,12 @@ class TimeBlockModel extends Base
     }
 
     /**
-     * Project ids the user may access — mirrors CalendarQueryModel's
-     * access filter (role-based active memberships).
+     * Project ids the user may access.
+     *
+     * Filters to the user's role-based active project memberships (no
+     * app-admin see-all bypass) via core ProjectPermissionModel::getActiveProjectIds().
+     * This intentionally differs from CalendarPlugin's own accessibleProjectIds,
+     * which does include the app-admin see-all bypass.
      */
     protected function accessibleProjectIds(int $userId): array
     {

@@ -41,8 +41,8 @@ The block is stored as two task metadata keys — no new database table:
 If either key is absent, the task has no block. Setting a block writes both
 keys together; clearing removes both. `TimeBlockModel::set()` rejects (and
 does not persist) an end time that isn't strictly later than the start time —
-the same rule is enforced client-side by the controller's date/time parser
-before the model is ever called.
+the same rule is enforced server-side by the controller's date/time parser
+(`TimeBlockController::parseTimes()`) before the model is ever called.
 
 ## Calendar integration
 
