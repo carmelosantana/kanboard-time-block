@@ -1,0 +1,51 @@
+/* TimeBlock — sitewide styles for the task panel and board badge.
+   Injected via template:layout:css (mirrors DependencyPlugin's ~1KB rationale:
+   too small to justify a route allowlist; badge renders on board/search too). */
+
+.timeblock-panel .tb-current {
+    font-weight: 600;
+    margin: 4px 0;
+}
+
+.timeblock-panel .tb-empty {
+    color: #999;
+    margin: 4px 0;
+}
+
+.timeblock-panel .tb-edit {
+    margin: 6px 0;
+}
+
+.timeblock-panel .tb-edit > summary {
+    cursor: pointer;
+    color: #36c;
+}
+
+.timeblock-panel .tb-form label {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.9em;
+}
+
+.timeblock-panel .tb-form input[type="date"],
+.timeblock-panel .tb-form input[type="time"] {
+    width: 100%;
+    max-width: 220px;
+}
+
+.timeblock-panel .tb-actions,
+.timeblock-panel .tb-clear-form {
+    margin-top: 8px;
+}
+
+.tb-badge {
+    display: inline-block;
+    font-size: 0.8em;
+    line-height: 1.4;
+    padding: 0 4px;
+    margin-right: 4px;
+    border-radius: 3px;
+    background: #eef3fb;
+    color: #36c;
+    white-space: nowrap;
+}
