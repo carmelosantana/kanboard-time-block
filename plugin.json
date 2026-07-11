@@ -1,0 +1,11 @@
+{
+    "name": "TimeBlock",
+    "description": "Give a task one planned start+end time block — shown on the task page and board, and contributed to CalendarPlugin's week/day views.",
+    "version": "1.0.0",
+    "author": "Carmelo Santana",
+    "license": "MIT",
+    "homepage": "https://github.com/carmelosantana/kanboard-time-block",
+    "kanboard_version": ">=1.2.47",
+    "php_version": ">=8.4",
+    "recommends": [ { "plugin": "CalendarPlugin", "min_version": "1.2.0", "reason": "renders time blocks on the calendar week/day views" } ]
+}
