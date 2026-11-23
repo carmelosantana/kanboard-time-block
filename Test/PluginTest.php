@@ -18,7 +18,7 @@ class PluginTest extends Base
         $plugin = new Plugin($this->container);
 
         $this->assertSame('TimeBlock', $plugin->getPluginName());
-        $this->assertSame('1.0.0', $plugin->getPluginVersion());
+        $this->assertSame('1.0.1', $plugin->getPluginVersion());
         $this->assertSame('>=1.2.47', $plugin->getCompatibleVersion());
         $this->assertSame('MIT', $plugin->getPluginLicense());
         $this->assertNotEmpty($plugin->getPluginDescription());
