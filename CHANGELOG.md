@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 — 2026-11-22
+
+- Board badge loads every time block on the board in one query instead of two
+  metadata reads per task (600 queries for a 300-task board → 1). Kanboard #7284.
+
 ## 1.0.0 — 2026-07-10
 
 - Initial release.

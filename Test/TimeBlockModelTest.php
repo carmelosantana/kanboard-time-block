@@ -56,6 +56,21 @@ class TimeBlockModelTest extends Base
         $this->assertTrue($model->clear($taskId)); // idempotent: clearing an empty block still "succeeds"
     }
 
+    public function testGetForProjectReturnsCompleteBlocksKeyedByTask(): void
+    {
+        $model = new TimeBlockModel($this->container);
+        $full  = $this->seedTask();
+        $model->set($full, 1000000000, 1000003600);
+        $pid   = (int) $this->container['taskFinderModel']->getById($full)['project_id'];
+        $tc    = new TaskCreationModel($this->container);
+        $half  = (int) $tc->create(array('project_id' => $pid, 'title' => 'Start only'));
+        $this->container['taskMetadataModel']->save($half, array(TimeBlockModel::KEY_START => '1000000000'));
+        $other = $this->seedTask(); // another project
+        $model->set($other, 1000000000, 1000003600);
+
+        $this->assertSame(array($full => array('start' => 1000000000, 'end' => 1000003600)), $model->getForProject($pid));
+    }
+
     // ── blocksForCalendar ─────────────────────────────────────────────────────
 
     private const R_START = 1000000000; // range start

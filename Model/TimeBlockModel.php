@@ -35,6 +35,40 @@ class TimeBlockModel extends Base
     }
 
     /**
+     * Every complete block in a project, keyed by task id, in one query.
+     *
+     * Feeds the board badge so a board of N tasks costs one metadata read, not 2N
+     * (Kanboard #7284). Tasks with only one of the two keys are left out, as get() does.
+     *
+     * @return array<int, array{start:int, end:int}>
+     */
+    public function getForProject(int $projectId): array
+    {
+        $rows = $this->db->table('task_has_metadata')
+            ->columns('task_has_metadata.task_id', 'task_has_metadata.name', 'task_has_metadata.value')
+            ->join(TaskModel::TABLE, 'id', 'task_id', 'task_has_metadata')
+            ->eq(TaskModel::TABLE . '.project_id', $projectId)
+            ->in('task_has_metadata.name', array(self::KEY_START, self::KEY_END))
+            ->findAll();
+
+        $parts = array();
+        foreach ($rows as $row) {
+            if ($row['value'] !== '') {
+                $parts[(int) $row['task_id']][$row['name']] = (int) $row['value'];
+            }
+        }
+
+        $blocks = array();
+        foreach ($parts as $taskId => $part) {
+            if (isset($part[self::KEY_START], $part[self::KEY_END])) {
+                $blocks[$taskId] = array('start' => $part[self::KEY_START], 'end' => $part[self::KEY_END]);
+            }
+        }
+
+        return $blocks;
+    }
+
+    /**
      * Persist a block. Rejects (returns false) when end is not strictly after start.
      */
     public function set(int $taskId, int $start, int $end): bool

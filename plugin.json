@@ -1,7 +1,7 @@
 {
     "name": "TimeBlock",
     "description": "Give a task one planned start+end time block — shown on the task page and board, and contributed to CalendarPlugin's week/day views.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Carmelo Santana",
     "license": "MIT",
     "homepage": "https://github.com/carmelosantana/kanboard-time-block",
